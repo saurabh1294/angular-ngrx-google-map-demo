@@ -17,7 +17,7 @@ import { environment } from '../environments/environment';
     AgmCoreModule.forRoot({
       // please get your own API key here:
       // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
-      apiKey: 'AIzaSyAFemOVCthiat7plg9ysMF2mQHBut-jJOg'
+      apiKey: '<your google map api key here>'
     }),
     StoreModule.forRoot(reducers, {
       metaReducers,
