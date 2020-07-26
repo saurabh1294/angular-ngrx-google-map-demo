@@ -1,0 +1,64 @@
+<h1>Angular Google Maps (AGM) Demo</h1>
+<p><a href="https://angular-maps.com/" target="_blank">Official Website</a></p>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+<!-- Search form -->
+<div class="d-flex justify-content-center h-100">
+  <div class="searchbar">
+    <input class="search_input" (change) = "search($event)" type="text" name="" placeholder="Search by zip code 2011, 2150, 2250">
+    <a href="#" class="search_icon" (click) = "search($event)"><i class="fas fa-search"></i></a>
+  </div>
+</div>
+
+<div class="container mt-2">
+ 
+  <div class="row">
+  <div class="col-md-8">
+    <agm-map 
+      [latitude]="lat"
+      [longitude]="lng"
+      [zoom]="zoom"
+      [disableDefaultUI]="false"
+      [zoomControl]="false"
+      (mapClick)="mapClicked($event)">
+
+      <agm-marker 
+          *ngFor="let m of markers; let i = index"
+          (markerClick)="clickedMarker(m.label, i)"
+          [latitude]="m.lat"
+          [longitude]="m.lng"
+          [label]="m.label"
+          [markerDraggable]="m.draggable"
+          (dragEnd)="markerDragEnd(m, $event)">
+          
+        <agm-info-window>
+          <strong>InfoWindow content</strong>
+        </agm-info-window>
+        
+      </agm-marker>
+      
+      <agm-circle [latitude]="lat + 0.3" [longitude]="lng" 
+          [radius]="5000"
+          [fillColor]="'red'"
+          [circleDraggable]="true"
+          [editable]="true">
+      </agm-circle>
+
+    </agm-map>
+  </div>
+
+  <div class="col-md-4 store-info-box">
+    <span *ngIf="markers.length > 0 else elseBlock" class="results"> Results ({{markers.length}})
+    <ul>
+      <li class="address">
+        {{address}}
+      </li>
+    </ul>
+  </span>
+  <ng-template #elseBlock><span *ngIf="searchInitiated" class="results">
+    No stores found.
+  </span></ng-template>
+  </div>
+</div>
+</div>
